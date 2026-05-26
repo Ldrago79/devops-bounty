@@ -1,0 +1,48 @@
+
+
+services:
+  # 1. Our Node.js Web Application
+  app:
+    build: .
+    container_name: bounty_app
+    restart: always
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://db:27017/startup_db
+    networks:
+      - bounty-network
+    depends_on:
+      - db
+
+  # 2. The MongoDB Database
+  db:
+    image: mongo:6-jammy
+    container_name: bounty_db
+    restart: always
+    volumes:
+      - db-data:/data/db
+    networks:
+      - bounty-network
+
+  # 3. The Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: bounty_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - bounty-network
+    depends_on:
+      - app
+
+# Internal Networking Requirement
+networks:
+  bounty-network:
+    driver: bridge
+
+# Persistent Volumes Requirement
+volumes:
+  db-data:

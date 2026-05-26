@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install the app dependencies
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Copy the rest of our application files (like server.js)
 COPY . .
