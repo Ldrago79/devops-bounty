@@ -1,0 +1,20 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Rebuild and Run Container
+        run: |
+          sudo docker-compose down
+          sudo docker-compose up -d --build
