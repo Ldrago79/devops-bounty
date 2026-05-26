@@ -1,0 +1,12 @@
+{
+  "name": "startup-web-app",
+  "version": "1.0.0",
+  "description": "Containerized web app for DevOps Bounty",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
